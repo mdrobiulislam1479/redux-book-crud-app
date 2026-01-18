@@ -22,7 +22,13 @@ const initialState = {
 const bookSlice = createSlice({
   name: "books",
   initialState,
-  reducers: {},
+  reducers: {
+    deleteBook: (state, action) => {
+      const id = action.payload;
+      state.books = state.books.filter((book) => book.id !== id);
+    },
+  },
 });
 
 export default bookSlice.reducer;
+export const { deleteBook } = bookSlice.actions;
