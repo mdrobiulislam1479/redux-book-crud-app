@@ -1,12 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { deleteBook } from "../features/bookSlice";
 
-const BookList = () => {
+const BookList = ({ onHandleEdit }) => {
   const books = useSelector((state) => state.books.books);
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
     dispatch(deleteBook(id));
+  };
+
+  const handleEdit = (book) => {
+    onHandleEdit(book);
   };
 
   return (
@@ -37,7 +41,10 @@ const BookList = () => {
                 >
                   Delete
                 </button>
-                <button className="px-4 py-1 bg-green-500 rounded">
+                <button
+                  onClick={() => handleEdit(book)}
+                  className="px-4 py-1 bg-green-500 rounded"
+                >
                   Update
                 </button>
               </td>

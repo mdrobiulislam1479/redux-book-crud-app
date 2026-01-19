@@ -1,15 +1,21 @@
 import { nanoid } from "nanoid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addBook } from "../features/bookSlice";
+import { addBook, updateBook } from "../features/bookSlice";
 
-const BookFrom = () => {
+const BookFrom = ({ bookToEdit }) => {
   const [book, setBook] = useState({
     title: "",
     author: "",
     price: "",
     quantity: "",
   });
+
+  useEffect(() => {
+    if (bookToEdit) {
+      setBook(bookToEdit);
+    }
+  }, [bookToEdit]);
 
   const dispatch = useDispatch();
 
@@ -20,7 +26,17 @@ const BookFrom = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addBook({ id: nanoid(), ...book }));
+    if (bookToEdit) {
+      dispatch(updateBook(book));
+    } else {
+      dispatch(addBook({ id: nanoid(), ...book }));
+    }
+    setBook({
+      title: "",
+      author: "",
+      price: "",
+      quantity: "",
+    });
   };
 
   return (
@@ -62,7 +78,7 @@ const BookFrom = () => {
         />
         <br />
         <button type="submit" className="py-3 bg-green-500 w-full">
-          Add
+          {bookToEdit ? "Update" : "Add"}
         </button>
       </form>
     </div>
