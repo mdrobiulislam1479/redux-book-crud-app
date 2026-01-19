@@ -11,6 +11,7 @@ const BookList = () => {
 
   return (
     <div>
+      <h1 className="text-2xl m-5 text-center">List Of Books:</h1>
       <table className="border border-collapse w-full">
         <thead className="border">
           <tr>
