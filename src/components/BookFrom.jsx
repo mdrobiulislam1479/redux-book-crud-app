@@ -1,4 +1,7 @@
+import { nanoid } from "nanoid";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addBook } from "../features/bookSlice";
 
 const BookFrom = () => {
   const [book, setBook] = useState({
@@ -8,6 +11,8 @@ const BookFrom = () => {
     quantity: "",
   });
 
+  const dispatch = useDispatch();
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setBook((prev) => ({ ...prev, [name]: value }));
@@ -15,7 +20,7 @@ const BookFrom = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(book);
+    dispatch(addBook({ id: nanoid(), ...book }));
   };
 
   return (
